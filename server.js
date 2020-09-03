@@ -2,14 +2,15 @@ var http = require("http");
 var url = require("url");
 var querystring = require("querystring");
 
-function start() {
+function start(route, handler) {
     http.createServer((req, res) => {
         var pathname = url.parse(req.url).pathname;
-        var a = url.parse(req.url).query;
-        var b = querystring.parse(req.url);
-        console.log(req.url);
+        console.log("Request for " + pathname + " received.");
+
+        route(pathname, handler);
+
         res.writeHead(200, {"Content-Type": "text/html"});
-        res.write("Hello World!");
+        res.write("Hello World!\n");
         res.end();
     }).listen(8888);
 
